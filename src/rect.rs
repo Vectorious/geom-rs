@@ -7,7 +7,7 @@ pub struct Rect {
 }
 
 impl Rect {
-    pub fn new(top: i32, left: i32, height: i32, width: i32) -> Rect {
+    pub fn new(left: i32, top: i32, width: i32, height: i32) -> Rect {
         Rect {
             bottom_right: Point{ x: left + width - 1, y: top + height - 1 },
             top_left: Point { x: left, y: top }
@@ -50,6 +50,25 @@ impl Rect {
         self.bottom_right.x
     }
 
+    pub fn area(&self) -> i32 {
+        self.width() * self.height()
+    }
+
+    pub fn intersect(&self, other: &Rect) -> Option<Rect> {
+        use std::cmp::{min, max};
+
+        let left = max(self.left(), other.left());
+        let right = min(self.right(), other.right());
+        let top = max(self.top(), other.top());
+        let bottom = min(self.bottom(), other.bottom());
+
+        if left <= right && top <= bottom {
+            Some(Point::new(left, top).rect(Point::new(right, bottom)))
+        } else {
+            None
+        }
+    }
+
     pub fn split_column_mut(&mut self, col: i32) -> Rect {
         let new_rect = Rect::from_points(Point::new(col, self.top()), self.bottom_right());
         self.bottom_right.x = col - 1;
@@ -72,7 +91,7 @@ impl Rect {
         let mut columns: Vec<Rect> = Vec::new();
 
         for x in (self.left()..self.right()+1) {
-            columns.push(Rect::new(self.top(), x, self.height() + 1, 1));
+            columns.push(Rect::new(x, self.top(), 1, self.height() + 1));
         }
 
         columns
@@ -82,7 +101,7 @@ impl Rect {
         let mut rows: Vec<Rect> = Vec::new();
 
         for y in (self.top()..self.bottom()+1) {
-            rows.push(Rect::new(y, self.left(), 1, self.width() + 1));
+            rows.push(Rect::new(self.left(), y, self.width() + 1, 1));
         }
 
         rows
