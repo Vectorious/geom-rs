@@ -59,8 +59,8 @@ mod tests {
 
         assert_eq!(r.top(), 0);
         assert_eq!(r.left(), 0);
-        assert_eq!(r.bottom(), 9);
-        assert_eq!(r.right(), 4);
+        assert_eq!(r.bottom(), 4);
+        assert_eq!(r.right(), 9);
     }
 
 
