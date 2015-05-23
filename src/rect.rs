@@ -105,7 +105,7 @@ impl Rect {
     pub fn rows(&self) -> Vec<Rect> {
         let mut rows: Vec<Rect> = Vec::new();
 
-        for y in (self.top()..self.bottom()+1) {
+        for y in self.top()..self.bottom()+1 {
             rows.push(Rect::new(self.left(), y, self.width(), 1));
         }
 
