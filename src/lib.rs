@@ -63,6 +63,50 @@ mod tests {
         assert_eq!(r.right(), 9);
     }
 
+    #[test]
+    fn rect_iter() {
+        let mut r = Rect::new(0, 0, 10, 15).iter();
+
+        assert_eq!(r.nth(0), Some(Point::new(0, 0)));  // [0]
+        assert_eq!(r.nth(8), Some(Point::new(9, 0)));  // [9]
+        assert_eq!(r.nth(0), Some(Point::new(0, 1)));  // [10]
+        assert_eq!(r.last(), Some(Point::new(9, 14)));
+    }
+
+    #[test]
+    fn rect_contains() {
+        let r = Rect::new(2, 3, 10, 15);
+
+        assert!(r.contains(Point::new(2, 3)));
+        assert!(r.contains(Point::new(5, 5)));
+        assert!(r.contains(Point::new(11, 17)));
+
+        assert_eq!(r.contains(Point::new(0, 0)), false);
+        assert_eq!(r.contains(Point::new(5, 0)), false);
+        assert_eq!(r.contains(Point::new(12, 17)), false);
+    }
+
+    #[test]
+    fn rect_rows() {
+        let r = Rect::new(4, 2, 12, 14);
+
+        for row in r.rows() {
+            for point in row {
+                assert!(r.contains(point), "{:?} not in Rect {:?}", point, r);
+            }
+        }
+    }
+
+    #[test]
+    fn rect_columns() {
+        let r = Rect::new(4, 2, 12, 14);
+
+        for row in r.columns() {
+            for point in row {
+                assert!(r.contains(point), "{:?} not in Rect {:?}", point, r);
+            }
+        }
+    }
 
     #[test]
     fn point_operators() {

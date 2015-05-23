@@ -54,6 +54,11 @@ impl Rect {
         self.width() * self.height()
     }
 
+    pub fn contains(&self, point: Point) -> bool {
+        self.left() <= point.x && point.x <= self.right() &&
+        self.top() <= point.y && point.y <= self.bottom()
+    }
+
     pub fn intersect(&self, other: &Rect) -> Option<Rect> {
         use std::cmp::{min, max};
 
@@ -90,8 +95,8 @@ impl Rect {
     pub fn columns(&self) -> Vec<Rect> {
         let mut columns: Vec<Rect> = Vec::new();
 
-        for x in (self.left()..self.right()+1) {
-            columns.push(Rect::new(x, self.top(), 1, self.height() + 1));
+        for x in self.left()..self.right()+1 {
+            columns.push(Rect::new(x, self.top(), 1, self.height()));
         }
 
         columns
@@ -101,7 +106,7 @@ impl Rect {
         let mut rows: Vec<Rect> = Vec::new();
 
         for y in (self.top()..self.bottom()+1) {
-            rows.push(Rect::new(self.left(), y, self.width() + 1, 1));
+            rows.push(Rect::new(self.left(), y, self.width(), 1));
         }
 
         rows
