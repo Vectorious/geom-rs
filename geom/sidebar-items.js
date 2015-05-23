@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["point",""],["rect",""]],"type":[["Point",""],["Rect",""]]});
