@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Point","A simple two-dimensional Point structure."]],"constant":[["DOWN",""],["LEFT",""],["RIGHT",""],["UP",""],["ZERO",""]]});
+initSidebarItems({"constant":[["DOWN",""],["LEFT",""],["RIGHT",""],["UP",""],["ZERO",""]],"struct":[["Point","A simple two-dimensional Point structure."]]});
