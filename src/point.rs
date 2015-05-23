@@ -16,11 +16,12 @@ pub struct Point {
 }
 
 impl Point {
+    /// Creates a new point with the given `x` and `y` coordinates.
     pub fn new(x: i32, y: i32) -> Point {
         Point { x: x, y: y }
     }
 
-    /// Creates a [`Rect`](../rect/struct.Rect.html) with `self` as the top-left `Point` and `other` as the bottom-right `Point`.
+    /// Creates a rect with `self` as the top-left point and `other` as the bottom-right point.
     pub fn rect(&self, other: Point) -> Rect {
         Rect::from_points(*self, other)
     }
@@ -34,6 +35,7 @@ impl Add for Point {
     }
 }
 
+/// Adds an `i32` value to both the `x` and `y` values of a point.
 impl Add<i32> for Point {
     type Output = Point;
     fn add(self, other: i32) -> Point {
@@ -48,6 +50,7 @@ impl Sub for Point {
     }
 }
 
+/// Subtracts an `i32` value from both the `x` and `y` values of a point.
 impl Sub<i32> for Point {
     type Output = Point;
     fn sub(self, other: i32) -> Point {
