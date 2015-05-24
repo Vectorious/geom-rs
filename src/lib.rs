@@ -1,8 +1,11 @@
+#![feature(zero_one)]
+#![feature(step_trait)]
+
 pub mod point;
 pub mod rect;
 
-pub type Point = point::Point;
-pub type Rect = rect::Rect;
+pub type Point<T> = point::Point<T>;
+pub type Rect<T> = rect::Rect<T>;
 
 #[cfg(test)]
 mod tests {
@@ -42,8 +45,8 @@ mod tests {
 
     #[test]
     fn rect_from_points() {
-        let r = point::ZERO.rect(Point::new(4, 9));
-        let s = Rect::from_points(point::ZERO, Point::new(4, 9));
+        let r = Point::zero().rect(Point::new(4, 9));
+        let s = Rect::from_points(Point::zero(), Point::new(4, 9));
 
         assert_eq!(r, s);
 
@@ -113,12 +116,21 @@ mod tests {
         let a = Point::new(3, 6);
         let b = Point::new(7, 4);
 
-        assert_eq!(a - a, point::ZERO);
+        assert_eq!(a - a, Point::zero());
 
         assert_eq!(a + b, Point::new(10, 10));
         assert_eq!(a - b, Point::new(-4, 2));
 
         assert_eq!(a + 7, Point::new(10, 13));
         assert_eq!(a - 3, Point::new(0, 3));
+
+        let f_a = Point::new(4.14, 4.50);
+        let f_b = Point::new(1.42, 0.11);
+
+        assert_eq!(f_a - f_a, Point::zero());
+
+        assert_eq!(f_a + f_b, Point::new(5.56, 4.61));
+        assert_eq!(f_a + 1.0, Point::new(5.14, 5.50));
+        assert!(f_a - 1.0 != Point::new(3.14, 3.51));
     }
 }
