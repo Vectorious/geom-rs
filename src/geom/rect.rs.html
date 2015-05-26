@@ -220,6 +220,73 @@
 <span id="178">178</span>
 <span id="179">179</span>
 <span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>One</span>;
 <span class='kw'>use</span> <span class='ident'>point</span>::{<span class='ident'>Point</span>, <span class='ident'>Position2D</span>};
@@ -227,6 +294,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>Ord</span>, <span class='ident'>min</span>, <span class='ident'>max</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>Iterator</span>;
 
+<span class='doccomment'>/// A generic rectangle structure.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='ident'>top_left</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>,
@@ -240,6 +308,7 @@
              <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>Output</span><span class='op'>=</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span>
              <span class='ident'>Ord</span> <span class='op'>+</span> <span class='ident'>One</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Default</span> <span class='op'>+</span> <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Clone</span>
 {
+    <span class='doccomment'>/// Returns a new rectangle with the supplied position and dimensions.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>left</span>: <span class='ident'>T</span>, <span class='ident'>top</span>: <span class='ident'>T</span>, <span class='ident'>width</span>: <span class='ident'>T</span>, <span class='ident'>height</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Rect</span>::<span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
             <span class='ident'>bottom_right</span>: <span class='ident'>Point</span>::<span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>left</span> <span class='op'>+</span> <span class='ident'>width</span> <span class='op'>-</span> <span class='ident'>T</span>::<span class='ident'>one</span>(), <span class='ident'>top</span> <span class='op'>+</span> <span class='ident'>height</span> <span class='op'>-</span> <span class='ident'>T</span>::<span class='ident'>one</span>()),
@@ -247,51 +316,65 @@
         }
     }
 
+    <span class='doccomment'>/// Returns a new rectangle with the given top-left and bottom-right points.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_points</span>(<span class='ident'>top_left</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>bottom_right</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Rect</span> { <span class='ident'>top_left</span>: <span class='ident'>top_left</span>, <span class='ident'>bottom_right</span>: <span class='ident'>bottom_right</span> }
     }
 
+    <span class='doccomment'>/// Returns the width of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>width</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>right</span>() <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>left</span>() <span class='op'>+</span> <span class='ident'>T</span>::<span class='ident'>one</span>()
     }
 
+    <span class='doccomment'>/// Returns the height of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>height</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>bottom</span>() <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>top</span>() <span class='op'>+</span> <span class='ident'>T</span>::<span class='ident'>one</span>()
     }
 
+    <span class='doccomment'>/// Returns a copy of the top-left point of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>top_left</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>top_left</span>
     }
 
+    <span class='doccomment'>/// Returns the `y` coordinate of the top side of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>top</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>top_left</span>.<span class='ident'>y</span>()
     }
 
+    <span class='doccomment'>/// Returns the `x` coordinate of the left side of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>left</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>top_left</span>.<span class='ident'>x</span>()
     }
 
+    <span class='doccomment'>/// Returns a copy of the bottom-right point of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bottom_right</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>bottom_right</span>
     }
 
+    <span class='doccomment'>/// Returns the `y` coordinate of the bottom side of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>bottom</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>bottom_right</span>.<span class='ident'>y</span>()
     }
 
+    <span class='doccomment'>/// Returns the `x` coordinate of the right side of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>right</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>bottom_right</span>.<span class='ident'>x</span>()
     }
 
+    <span class='doccomment'>/// Returns the area of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>area</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>width</span>() <span class='op'>*</span> <span class='self'>self</span>.<span class='ident'>height</span>()
     }
 
+    <span class='doccomment'>/// Returns `true` if the given point lies within the bounds of the rectangle,</span>
+    <span class='doccomment'>/// and `false` otherwise.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>point</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='self'>self</span>.<span class='ident'>left</span>() <span class='op'>&lt;=</span> <span class='ident'>point</span>.<span class='ident'>x</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>point</span>.<span class='ident'>x</span>() <span class='op'>&lt;=</span> <span class='self'>self</span>.<span class='ident'>right</span>() <span class='op'>&amp;&amp;</span>
         <span class='self'>self</span>.<span class='ident'>top</span>() <span class='op'>&lt;=</span> <span class='ident'>point</span>.<span class='ident'>y</span>() <span class='op'>&amp;&amp;</span> <span class='ident'>point</span>.<span class='ident'>y</span>() <span class='op'>&lt;=</span> <span class='self'>self</span>.<span class='ident'>bottom</span>()
     }
 
+    <span class='doccomment'>/// If `self` and `other` intersect, then the intersection of the two rectangles</span>
+    <span class='doccomment'>/// is returned as a new rectangle, otherwise `None` is returned.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>intersect</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>left</span> <span class='op'>=</span> <span class='ident'>max</span>(<span class='self'>self</span>.<span class='ident'>left</span>(), <span class='ident'>other</span>.<span class='ident'>left</span>());
         <span class='kw'>let</span> <span class='ident'>right</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>right</span>(), <span class='ident'>other</span>.<span class='ident'>right</span>());
@@ -305,6 +388,29 @@
         }
     }
 
+    <span class='doccomment'>/// Splits the rectangle at the given column `col`. The right side of the left part</span>
+    <span class='doccomment'>/// of the resulting split will be at `col - 1`, and the left side of the right part</span>
+    <span class='doccomment'>/// will be at `col`. The current rectangle will be modified in-place to be the left</span>
+    <span class='doccomment'>/// part, and the right part will be returned as a new rectangle.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Examples</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// use geom::Rect;</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// let mut r = Rect::new(0, 0, 10, 10);</span>
+    <span class='doccomment'>/// let s = r.split_column_mut(5);</span>
+    <span class='doccomment'>/// </span>
+    <span class='doccomment'>/// assert_eq!(r.top(), 0);</span>
+    <span class='doccomment'>/// assert_eq!(r.left(), 0);</span>
+    <span class='doccomment'>/// assert_eq!(r.bottom(), 9);</span>
+    <span class='doccomment'>/// assert_eq!(r.right(), 4);</span>
+    <span class='doccomment'>/// </span>
+    <span class='doccomment'>/// assert_eq!(s.top(), 0);</span>
+    <span class='doccomment'>/// assert_eq!(s.left(), 5);</span>
+    <span class='doccomment'>/// assert_eq!(s.bottom(), 9);</span>
+    <span class='doccomment'>/// assert_eq!(s.right(), 9);</span>
+    <span class='doccomment'>/// ```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>split_column_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>col</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>new_rect</span> <span class='op'>=</span> <span class='ident'>Rect</span>::<span class='ident'>from_points</span>(<span class='ident'>Point</span>::<span class='ident'>new</span>(<span class='ident'>col</span>, <span class='self'>self</span>.<span class='ident'>top</span>()), <span class='self'>self</span>.<span class='ident'>bottom_right</span>());
         <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>bottom_right</span>.<span class='ident'>x_mut</span>() <span class='op'>=</span> <span class='ident'>col</span> <span class='op'>-</span> <span class='ident'>T</span>::<span class='ident'>one</span>();
@@ -312,6 +418,29 @@
         <span class='ident'>new_rect</span>
     }
 
+    <span class='doccomment'>/// Splits the rectangle at the given row `row`. The bottom side of the top part</span>
+    <span class='doccomment'>/// of the resulting split will be at `row - 1`, and the top side of the bottom part</span>
+    <span class='doccomment'>/// will be at `row`. The current rectangle will be modified in-place to be the top</span>
+    <span class='doccomment'>/// part, and the bottom part will be returned as a new rectangle.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// # Examples</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// ```</span>
+    <span class='doccomment'>/// use geom::Rect;</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// let mut r = Rect::new(0, 0, 10, 10);</span>
+    <span class='doccomment'>/// let s = r.split_row_mut(5);</span>
+    <span class='doccomment'>/// </span>
+    <span class='doccomment'>/// assert_eq!(r.top(), 0);</span>
+    <span class='doccomment'>/// assert_eq!(r.left(), 0);</span>
+    <span class='doccomment'>/// assert_eq!(r.bottom(), 4);</span>
+    <span class='doccomment'>/// assert_eq!(r.right(), 9);</span>
+    <span class='doccomment'>/// </span>
+    <span class='doccomment'>/// assert_eq!(s.top(), 5);</span>
+    <span class='doccomment'>/// assert_eq!(s.left(), 0);</span>
+    <span class='doccomment'>/// assert_eq!(s.bottom(), 9);</span>
+    <span class='doccomment'>/// assert_eq!(s.right(), 9);</span>
+    <span class='doccomment'>/// ```</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>split_row_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>row</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>new_rect</span> <span class='op'>=</span> <span class='ident'>Rect</span>::<span class='ident'>from_points</span>(<span class='ident'>Point</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>left</span>(), <span class='ident'>row</span>), <span class='self'>self</span>.<span class='ident'>bottom_right</span>());
         <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>bottom_right</span>.<span class='ident'>y_mut</span>() <span class='op'>=</span> <span class='ident'>row</span> <span class='op'>-</span> <span class='ident'>T</span>::<span class='ident'>one</span>();
@@ -319,6 +448,7 @@
         <span class='ident'>new_rect</span>
     }
 
+    <span class='doccomment'>/// Returns a `Vec` containing a one-width rectangle for each column of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>columns</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>columns</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
 
@@ -331,6 +461,7 @@
         <span class='ident'>columns</span>
     }
 
+    <span class='doccomment'>/// Returns a `Vec` containing a one-height rectangle for each row of the rectangle.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rows</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rows</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
 
@@ -351,7 +482,8 @@
              <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>Output</span><span class='op'>=</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span>
              <span class='ident'>Ord</span> <span class='op'>+</span> <span class='ident'>One</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Default</span> <span class='op'>+</span> <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Clone</span>
 {
-
+    <span class='doccomment'>/// Returns an iterator over each point in the rectangle, going from left-to-right and</span>
+    <span class='doccomment'>/// top-to-bottom.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>iter</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>into_iter</span>()
     }
@@ -371,6 +503,8 @@
     }
 }
 
+<span class='doccomment'>/// An iterator over a rectangle, returning each point within the rectangle going from</span>
+<span class='doccomment'>/// left-to-right and top-to-bottom.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='ident'>rect</span>: <span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>,
     <span class='ident'>cur</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
