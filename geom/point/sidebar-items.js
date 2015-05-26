@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["Position2D","A type with `x` and `y` coordinates."]],"struct":[["Point","A generic two-dimensional point structure."]]});
+initSidebarItems({"struct":[["Point","A generic two-dimensional point structure."]],"trait":[["Position2D","A type with `x` and `y` coordinates."]]});
