@@ -1,11 +1,23 @@
-#![feature(zero_one)]
-#![feature(step_trait)]
+use std::ops::Add;
 
 pub mod point;
 pub mod rect;
 
 pub type Point<T> = point::Point<T>;
 pub type Rect<T> = rect::Rect<T>;
+
+trait One<T>
+    where T: Add<i32, Output=T> +
+             Default
+{
+    fn one() -> T {
+        T::default() + 1
+    }
+}
+
+impl<T> One<T> for T
+    where T: Default + Add<i32, Output=T>
+{ /* derived implementor */ }
 
 #[cfg(test)]
 mod tests {
@@ -45,8 +57,8 @@ mod tests {
 
     #[test]
     fn rect_from_points() {
-        let r = Point::zero().rect(Point::new(4, 9));
-        let s = Rect::from_points(Point::zero(), Point::new(4, 9));
+        let r = Point::default().rect(Point::new(4, 9));
+        let s = Rect::from_points(Point::default(), Point::new(4, 9));
 
         assert_eq!(r, s);
 
@@ -116,7 +128,7 @@ mod tests {
         let a = Point::new(3, 6);
         let b = Point::new(7, 4);
 
-        assert_eq!(a - a, Point::zero());
+        assert_eq!(a - a, Point::default());
 
         assert_eq!(a + b, Point::new(10, 10));
         assert_eq!(a - b, Point::new(-4, 2));
@@ -127,7 +139,7 @@ mod tests {
         let f_a = Point::new(4.14, 4.50);
         let f_b = Point::new(1.42, 0.11);
 
-        assert_eq!(f_a - f_a, Point::zero());
+        assert_eq!(f_a - f_a, Point::default());
 
         assert_eq!(f_a + f_b, Point::new(5.56, 4.61));
         assert_eq!(f_a + 1.0, Point::new(5.14, 5.50));

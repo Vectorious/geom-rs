@@ -1,20 +1,22 @@
-use std::ops::{Add, Sub, Mul, Div};
-use std::cmp::{PartialOrd, Ord, min, max};
-use std::num::One;
-use std::iter::{Step, Iterator};
+use super::One;
 use point::{Point, Position2D};
+use std::ops::{Add, Sub, Mul};
+use std::cmp::{Ord, min, max};
+use std::iter::Iterator;
 
 #[derive(PartialEq, Eq, Copy, Clone, Debug)]
-pub struct Rect<T> where T: Clone + Copy {
+pub struct Rect<T> {
     top_left: Point<T>,
     bottom_right: Point<T>
 }
 
-impl<T> Rect<T> where T: Add<T, Output=T> +
-                         Sub<T, Output=T> +
-                         Mul<T, Output=T> +
-                         Div<T, Output=T> +
-                         PartialOrd + Ord + Step + One + Clone + Copy {
+impl<T> Rect<T>
+    where T: Add<i32, Output=T> +
+             Add<T, Output=T> +
+             Sub<T, Output=T> +
+             Mul<T, Output=T> +
+             Ord + One<T> + Default + Copy + Clone
+{
     pub fn new(left: T, top: T, width: T, height: T) -> Rect<T> {
         Rect::<T> {
             bottom_right: Point::<T>::new(left + width - T::one(), top + height - T::one()),
@@ -94,10 +96,6 @@ impl<T> Rect<T> where T: Add<T, Output=T> +
         new_rect
     }
 
-    pub fn iter(&self) -> Iter<T> {
-        self.into_iter()
-    }
-
     pub fn columns(&self) -> Vec<Rect<T>> {
         let mut columns: Vec<Rect<T>> = Vec::new();
 
@@ -123,12 +121,26 @@ impl<T> Rect<T> where T: Add<T, Output=T> +
     }
 }
 
+impl<T> Rect<T>
+    where T: Add<i32, Output=T> +
+             Add<T, Output=T> +
+             Sub<T, Output=T> +
+             Mul<T, Output=T> +
+             Ord + One<T> + Default + Copy + Clone
+{
+
+    pub fn iter(&self) -> Iter<T> {
+        self.into_iter()
+    }
+}
+
 impl<T> IntoIterator for Rect<T>
-        where T: Add<T, Output=T> +
-                 Sub<T, Output=T> +
-                 Mul<T, Output=T> +
-                 Div<T, Output=T> +
-                 PartialOrd + Ord + Step + One + Clone + Copy {
+    where T: Add<i32, Output=T> +
+             Add<T, Output=T> +
+             Sub<T, Output=T> +
+             Mul<T, Output=T> +
+             Ord + One<T> + Default + Copy + Clone
+{
     type Item = Point<T>;
     type IntoIter = Iter<T>;
     fn into_iter(self) -> Iter<T> {
@@ -136,17 +148,18 @@ impl<T> IntoIterator for Rect<T>
     }
 }
 
-pub struct Iter<T> where T: Clone + Copy {
+pub struct Iter<T> {
     rect: Rect<T>,
     cur: Point<T>
 }
 
 impl<T> Iterator for Iter<T>
-        where T: Add<T, Output=T> +
-                 Sub<T, Output=T> +
-                 Mul<T, Output=T> +
-                 Div<T, Output=T> +
-                 PartialOrd + Ord + Step + One + Clone + Copy {
+    where T: Add<i32, Output=T> +
+             Add<T, Output=T> +
+             Sub<T, Output=T> +
+             Mul<T, Output=T> +
+             Ord + One<T> + Default + Copy + Clone
+{
     type Item = Point<T>;
     fn next(&mut self) -> Option<Self::Item> {
         let point = self.cur;
