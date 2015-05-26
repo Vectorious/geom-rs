@@ -1,60 +1,104 @@
+use super::One;
 use rect::Rect;
-use std::ops::{Add, Sub};
+use std::ops::{Add, Sub, Mul};
+use std::cmp::{Ord};
 
-pub const ZERO: Point = Point { x: 0, y: 0 };
-pub const UP: Point = Point { x: 0, y: -1 };
-pub const DOWN: Point = Point { x: 0, y: 1 };
-pub const LEFT: Point = Point { x: -1, y: 0 };
-pub const RIGHT: Point = Point { x: 1, y: 0 };
+pub trait Position2D<T> {
+    fn x(&self) -> T;
+    fn y(&self) -> T;
 
-
-/// A simple two-dimensional Point structure.
-#[derive(PartialEq, Eq, Hash, Copy, Clone, Debug)]
-pub struct Point {
-    pub x: i32,
-    pub y: i32
+    fn x_mut(&mut self) -> &mut T;
+    fn y_mut(&mut self) -> &mut T;
 }
 
-impl Point {
-    /// Creates a new point with the given `x` and `y` coordinates.
-    pub fn new(x: i32, y: i32) -> Point {
-        Point { x: x, y: y }
-    }
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub struct Point<T> {
+    x: T,
+    y: T
+}
 
-    /// Creates a rect with `self` as the top-left point and `other` as the bottom-right point.
-    pub fn rect(&self, other: Point) -> Rect {
-        Rect::from_points(*self, other)
+impl<T> Point<T> {
+    pub fn new(x: T, y: T) -> Point<T> {
+        Point::<T> { x: x, y: y }
     }
 }
 
-
-impl Add for Point {
-    type Output = Point;
-    fn add(self, other: Point) -> Point {
-        Point { x: self.x + other.x, y: self.y + other.y }
+impl<T> Default for Point<T>
+    where T: Default
+{
+    fn default() -> Point<T> {
+        Point::<T>::new(T::default(), T::default())
     }
 }
 
-/// Adds an `i32` value to both the `x` and `y` values of a point.
-impl Add<i32> for Point {
-    type Output = Point;
-    fn add(self, other: i32) -> Point {
-        Point { x: self.x + other, y: self.y + other }
+impl<T> Point<T>
+    where T: Add<i32, Output=T> +
+             Add<T, Output=T> +
+             Sub<T, Output=T> +
+             Mul<T, Output=T> +
+             Ord + One<T> + Default + Copy + Clone
+{
+    pub fn rect(self, other: Point<T>) -> Rect<T> {
+        Rect::from_points(self, other)
     }
 }
 
-impl Sub for Point {
-    type Output = Point;
-    fn sub(self, other: Point) -> Point {
-        Point { x: self.x - other.x, y: self.y - other.y }
+impl<T> Position2D<T> for Point<T>
+    where T: Copy + Clone
+{
+    fn x(&self) -> T {
+        self.x
+    }
+
+    fn y(&self) -> T {
+        self.y
+    }
+
+    fn x_mut(&mut self) -> &mut T {
+        &mut self.x
+    }
+
+    fn y_mut(&mut self) -> &mut T {
+        &mut self.y
     }
 }
 
-/// Subtracts an `i32` value from both the `x` and `y` values of a point.
-impl Sub<i32> for Point {
-    type Output = Point;
-    fn sub(self, other: i32) -> Point {
-        Point { x: self.x - other, y: self.y - other }
+impl<T> Add<Point<T>> for Point<T>
+    where Point<T>: Position2D<T>,
+          T: Add<T, Output=T>
+{
+    type Output = Point<T>;
+    fn add(self, other: Point<T>) -> Point<T> {
+        Point::<T>::new(self.x() + other.x(), self.y() + other.y())
     }
 }
 
+impl<T> Add<T> for Point<T>
+    where Point<T>: Position2D<T>,
+          T: Add<T, Output=T> + Clone + Copy
+{
+    type Output = Point<T>;
+    fn add(self, other: T) -> Point<T> {
+        Point::<T>::new(self.x() + other, self.y() + other)
+    }
+}
+
+impl<T> Sub<Point<T>> for Point<T>
+    where Point<T>: Position2D<T>,
+          T: Sub<T, Output=T>
+{
+    type Output = Point<T>;
+    fn sub(self, other: Point<T>) -> Point<T> {
+        Point::<T>::new(self.x() - other.x(), self.y() - other.y())
+    }
+}
+
+impl<T> Sub<T> for Point<T>
+    where Point<T>: Position2D<T>,
+          T: Sub<T, Output=T> + Clone + Copy
+{
+    type Output = Point<T>;
+    fn sub(self, other: T) -> Point<T> {
+        Point::<T>::new(self.x() - other, self.y() - other)
+    }
+}
