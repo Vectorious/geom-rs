@@ -144,20 +144,44 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>One</span>;
 <span class='kw'>use</span> <span class='ident'>rect</span>::<span class='ident'>Rect</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::{<span class='ident'>Ord</span>};
 
+<span class='doccomment'>/// A type with `x` and `y` coordinates.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Position2D</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Returns a copy of the `x` coordinate of the position.</span>
     <span class='kw'>fn</span> <span class='ident'>x</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>;
+
+    <span class='doccomment'>/// Returns a copy of the `y` coordinate of the position.</span>
     <span class='kw'>fn</span> <span class='ident'>y</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>;
 
+    <span class='doccomment'>/// Returns a mutable reference to the `x` coordinate of the position.</span>
     <span class='kw'>fn</span> <span class='ident'>x_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span>;
+
+    <span class='doccomment'>/// Returns a mutable reference to the `y` coordinate of the position.</span>
     <span class='kw'>fn</span> <span class='ident'>y_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span>;
 }
 
+<span class='doccomment'>/// A generic two-dimensional point structure.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='ident'>x</span>: <span class='ident'>T</span>,
@@ -165,6 +189,7 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>/// Returns a new `Point` with the given `x` and `y` coordinates.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>x</span>: <span class='ident'>T</span>, <span class='ident'>y</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Point</span>::<span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> { <span class='ident'>x</span>: <span class='ident'>x</span>, <span class='ident'>y</span>: <span class='ident'>y</span> }
     }
@@ -173,6 +198,7 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Default</span>
 {
+    <span class='doccomment'>/// Returns a new `Point` with the `x` and `y` coordinates being that of the default value of `T`.</span>
     <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Point</span>::<span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>::<span class='ident'>new</span>(<span class='ident'>T</span>::<span class='ident'>default</span>(), <span class='ident'>T</span>::<span class='ident'>default</span>())
     }
@@ -185,6 +211,8 @@
              <span class='ident'>Mul</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>Output</span><span class='op'>=</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span>
              <span class='ident'>Ord</span> <span class='op'>+</span> <span class='ident'>One</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Default</span> <span class='op'>+</span> <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Clone</span>
 {
+    <span class='doccomment'>/// Returns a new `Rect` with the top-left point being the value of `self`</span>
+    <span class='doccomment'>/// and the bottom-right point being the value of `other`.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rect</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Rect</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Rect</span>::<span class='ident'>from_points</span>(<span class='self'>self</span>, <span class='ident'>other</span>)
     }
@@ -193,18 +221,22 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Position2D</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Point</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Copy</span> <span class='op'>+</span> <span class='ident'>Clone</span>
 {
+    <span class='doccomment'>/// Returns a copy of the `x` coordinate of the point.</span>
     <span class='kw'>fn</span> <span class='ident'>x</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>x</span>
     }
 
+    <span class='doccomment'>/// Returns a copy of the `y` coordinate of the point.</span>
     <span class='kw'>fn</span> <span class='ident'>y</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
         <span class='self'>self</span>.<span class='ident'>y</span>
     }
 
+    <span class='doccomment'>/// Returns a mutable reference to the `x` coordinate of the point.</span>
     <span class='kw'>fn</span> <span class='ident'>x_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span> {
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>x</span>
     }
 
+    <span class='doccomment'>/// Returns a mutable reference to the `x` coordinate of the point.</span>
     <span class='kw'>fn</span> <span class='ident'>y_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>T</span> {
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>y</span>
     }
