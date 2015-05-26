@@ -106,6 +106,8 @@ impl<T> Rect<T>
     /// # Examples
     ///
     /// ```
+    /// use geom::Rect;
+    ///
     /// let mut r = Rect::new(0, 0, 10, 10);
     /// let s = r.split_column_mut(5);
     /// 
@@ -134,6 +136,8 @@ impl<T> Rect<T>
     /// # Examples
     ///
     /// ```
+    /// use geom::Rect;
+    ///
     /// let mut r = Rect::new(0, 0, 10, 10);
     /// let s = r.split_row_mut(5);
     /// 

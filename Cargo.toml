@@ -1,6 +1,6 @@
 [package]
 name = "geom"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Brandon King <wektorious@gmail.com>"]
 
 description = "Simple 2D geometry library."
