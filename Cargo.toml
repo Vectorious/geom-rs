@@ -11,6 +11,6 @@ repository = "https://github.com/Vectorious/geom-rs"
 
 readme = "README.md"
 
-keywords = ["geometry"]
+keywords = ["geometry", "2d"]
 
 license = "MIT"
