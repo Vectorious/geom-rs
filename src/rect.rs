@@ -12,11 +12,10 @@ pub struct Rect<T> {
 }
 
 impl<T> Rect<T>
-    where T: Add<i32, Output=T> +
-             Add<T, Output=T> +
+    where T: Add<T, Output=T> +
              Sub<T, Output=T> +
              Mul<T, Output=T> +
-             Ord + One<T> + Default + Copy + Clone
+             Ord + One + Default + Copy + Clone
 {
     /// Returns a new rectangle with the supplied position and dimensions.
     pub fn new(left: T, top: T, width: T, height: T) -> Rect<T> {
@@ -186,11 +185,10 @@ impl<T> Rect<T>
 }
 
 impl<T> Rect<T>
-    where T: Add<i32, Output=T> +
-             Add<T, Output=T> +
+    where T: Add<T, Output=T> +
              Sub<T, Output=T> +
              Mul<T, Output=T> +
-             Ord + One<T> + Default + Copy + Clone
+             Ord + One + Default + Copy + Clone
 {
     /// Returns an iterator over each point in the rectangle, going from left-to-right and
     /// top-to-bottom.
@@ -200,11 +198,10 @@ impl<T> Rect<T>
 }
 
 impl<T> IntoIterator for Rect<T>
-    where T: Add<i32, Output=T> +
-             Add<T, Output=T> +
+    where T: Add<T, Output=T> +
              Sub<T, Output=T> +
              Mul<T, Output=T> +
-             Ord + One<T> + Default + Copy + Clone
+             Ord + One + Default + Copy + Clone
 {
     type Item = Point<T>;
     type IntoIter = Iter<T>;
@@ -221,11 +218,10 @@ pub struct Iter<T> {
 }
 
 impl<T> Iterator for Iter<T>
-    where T: Add<i32, Output=T> +
-             Add<T, Output=T> +
+    where T: Add<T, Output=T> +
              Sub<T, Output=T> +
              Mul<T, Output=T> +
-             Ord + One<T> + Default + Copy + Clone
+             Ord + One + Default + Copy + Clone
 {
     type Item = Point<T>;
     fn next(&mut self) -> Option<Self::Item> {
