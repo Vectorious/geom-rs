@@ -42,11 +42,10 @@ impl<T> Default for Point<T>
 }
 
 impl<T> Point<T>
-    where T: Add<i32, Output=T> +
-             Add<T, Output=T> +
+    where T: Add<T, Output=T> +
              Sub<T, Output=T> +
              Mul<T, Output=T> +
-             Ord + One<T> + Default + Copy + Clone
+             Ord + One + Default + Copy + Clone
 {
     /// Returns a new `Rect` with the top-left point being the value of `self`
     /// and the bottom-right point being the value of `other`.
