@@ -4,7 +4,7 @@ pub mod rect;
 pub type Point<T> = point::Point<T>;
 pub type Rect<T> = rect::Rect<T>;
 
-trait One {
+pub trait One {
     fn one() -> Self;
 }
 

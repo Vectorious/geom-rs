@@ -19,7 +19,7 @@ pub trait Position2D<T> {
 }
 
 /// A generic two-dimensional point structure.
-#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+#[derive(Clone, Copy, PartialEq, Eq, Debug, Hash)]
 pub struct Point<T> {
     x: T,
     y: T

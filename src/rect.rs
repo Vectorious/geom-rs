@@ -5,7 +5,7 @@ use std::cmp::{Ord, min, max};
 use std::iter::Iterator;
 
 /// A generic rectangle structure.
-#[derive(PartialEq, Eq, Copy, Clone, Debug)]
+#[derive(PartialEq, Eq, Copy, Clone, Debug, Hash)]
 pub struct Rect<T> {
     top_left: Point<T>,
     bottom_right: Point<T>
@@ -109,12 +109,12 @@ impl<T> Rect<T>
     ///
     /// let mut r = Rect::new(0, 0, 10, 10);
     /// let s = r.split_column_mut(5);
-    /// 
+    ///
     /// assert_eq!(r.top(), 0);
     /// assert_eq!(r.left(), 0);
     /// assert_eq!(r.bottom(), 9);
     /// assert_eq!(r.right(), 4);
-    /// 
+    ///
     /// assert_eq!(s.top(), 0);
     /// assert_eq!(s.left(), 5);
     /// assert_eq!(s.bottom(), 9);
@@ -123,7 +123,7 @@ impl<T> Rect<T>
     pub fn split_column_mut(&mut self, col: T) -> Rect<T> {
         let new_rect = Rect::from_points(Point::new(col, self.top()), self.bottom_right());
         *self.bottom_right.x_mut() = col - T::one();
-    
+
         new_rect
     }
 
@@ -139,12 +139,12 @@ impl<T> Rect<T>
     ///
     /// let mut r = Rect::new(0, 0, 10, 10);
     /// let s = r.split_row_mut(5);
-    /// 
+    ///
     /// assert_eq!(r.top(), 0);
     /// assert_eq!(r.left(), 0);
     /// assert_eq!(r.bottom(), 4);
     /// assert_eq!(r.right(), 9);
-    /// 
+    ///
     /// assert_eq!(s.top(), 5);
     /// assert_eq!(s.left(), 0);
     /// assert_eq!(s.bottom(), 9);
