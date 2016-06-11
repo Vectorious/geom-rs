@@ -67,6 +67,26 @@ fn rect_iter() {
 }
 
 #[test]
+fn rect_iter_reverse() {
+    let mut r = Rect::new(0, 0, 10, 15).iter().rev();
+    assert_eq!(r.next(), Some(Point::new(9, 14)));  // [149]
+    assert_eq!(r.nth(138), Some(Point::new(0, 1))); // [10]
+    assert_eq!(r.next(), Some(Point::new(9, 0)));   // [9]
+    assert_eq!(r.last(), Some(Point::new(0, 0)));   // [0]
+}
+
+#[test]
+fn rect_iter_size_hint() {
+    assert_eq!(Rect::new(0, 0, 10, 15).iter().size_hint(), (150, Some(150)));
+    assert_eq!(Rect::new(0, 0, 1, 1).iter().size_hint(), (1, Some(1)));
+
+    let mut r = Rect::new(5000, -299, 10, 10).iter();
+    assert_eq!(r.size_hint(), (100, Some(100)));
+    r.nth(73);
+    assert_eq!(r.size_hint(), (26, Some(26)));
+}
+
+#[test]
 fn rect_contains() {
     let r = Rect::new(2, 3, 10, 15);
 

@@ -206,7 +206,7 @@ impl<T> IntoIterator for Rect<T>
     type Item = Point<T>;
     type IntoIter = Iter<T>;
     fn into_iter(self) -> Iter<T> {
-        Iter::<T> { cur: self.top_left(), rect: self }
+        Iter::<T> { cur: self.top_left(), cur_back: self.bottom_right(), rect: self }
     }
 }
 
@@ -214,7 +214,8 @@ impl<T> IntoIterator for Rect<T>
 /// left-to-right and top-to-bottom.
 pub struct Iter<T> {
     rect: Rect<T>,
-    cur: Point<T>
+    cur: Point<T>,
+    cur_back: Point<T>
 }
 
 impl<T> Iterator for Iter<T>
@@ -225,16 +226,16 @@ impl<T> Iterator for Iter<T>
 {
     type Item = Point<T>;
     fn next(&mut self) -> Option<Self::Item> {
-        let point = self.cur;
+        let point = self.cur.clone();
 
         if self.cur.x() < self.rect.right() {
             *self.cur.x_mut() = self.cur.x() + T::one();
-        } else if self.cur.y() <= self.rect.bottom() {
+        } else {
             *self.cur.x_mut() = self.rect.left();
             *self.cur.y_mut() = self.cur.y() + T::one();
         }
 
-        if point.x() <= self.rect.right() && point.y() <= self.rect.bottom() {
+        if point.y() <= self.rect.bottom() {
             Some(point)
         } else {
             None
@@ -274,16 +275,16 @@ impl<T> DoubleEndedIterator for Iter<T>
              Ord + One + Default + Copy + Clone
 {
     fn next_back(&mut self) -> Option<Self::Item> {
-        let point = self.cur;
+        let point = self.cur_back.clone();
 
-        if self.cur.x() > self.rect.left() {
-            *self.cur.x_mut() = self.cur.x() - T::one();
-        } else if self.cur.y() >= self.rect.top() {
-            *self.cur.x_mut() = self.rect.right();
-            *self.cur.y_mut() = self.cur.y() - T::one();
+        if self.cur_back.x() > self.rect.left() {
+            *self.cur_back.x_mut() = self.cur_back.x() - T::one();
+        } else {
+            *self.cur_back.x_mut() = self.rect.right();
+            *self.cur_back.y_mut() = self.cur_back.y() - T::one();
         }
 
-        if point.x() >= self.rect.left() && point.y() >= self.rect.top() {
+        if point.y() >= self.rect.top() {
             Some(point)
         } else {
             None
