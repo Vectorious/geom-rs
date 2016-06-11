@@ -240,4 +240,60 @@ impl<T> Iterator for Iter<T>
             None
         }
     }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        let cur = self.cur;
+        let rect = self.rect;
+
+        // Calculate the exact amount of points remaining in the iterator.
+        // We do this by getting the area of the rect, subtracting all of the points from rows
+        // that have already been passed, and then subtracting the columns that have been passed
+        // in the current row.
+        let rem = rect.area() -                              // area
+                  ((cur.y() - rect.top()) * rect.width()) -  // rows we've passed
+                  (cur.x() - rect.left());                   // columns we've passed in the row
+
+        // Convert rem to usize using a very hacky and innefficient method.
+        // We count the number of iterations it takes to get from T::default() to rem, by adding
+        // T::one(). Hopefully this can be replaced by a more efficient method at some point.
+        let mut size: usize = 0;
+        let mut count: T = T::default();
+        while count < rem {
+            count = count + T::one();
+            size += 1;
+        }
+
+        (size, Some(size))
+    }
 }
+
+impl<T> DoubleEndedIterator for Iter<T>
+    where T: Add<T, Output=T> +
+             Sub<T, Output=T> +
+             Mul<T, Output=T> +
+             Ord + One + Default + Copy + Clone
+{
+    fn next_back(&mut self) -> Option<Self::Item> {
+        let point = self.cur;
+
+        if self.cur.x() > self.rect.left() {
+            *self.cur.x_mut() = self.cur.x() - T::one();
+        } else if self.cur.y() >= self.rect.top() {
+            *self.cur.x_mut() = self.rect.right();
+            *self.cur.y_mut() = self.cur.y() - T::one();
+        }
+
+        if point.x() >= self.rect.left() && point.y() >= self.rect.top() {
+            Some(point)
+        } else {
+            None
+        }
+    }
+}
+
+impl<T> ExactSizeIterator for Iter<T>
+    where T: Add<T, Output=T> +
+             Sub<T, Output=T> +
+             Mul<T, Output=T> +
+             Ord + One + Default + Copy + Clone
+{  }
